@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core">
+
+    <http:listener-config name="HTTP_Listener_config">
+        <http:listener-connection host="0.0.0.0" port="8081"/>
+    </http:listener-config>
+
+    <flow name="helloFlow">
+        <http:listener path="/hello" config-ref="HTTP_Listener_config"/>
+        <set-payload value='{"message": "Hello World"}' mimeType="application/json"/>
+    </flow>
+
+</mule>
