@@ -1,31 +1,82 @@
-name: Mule CI/CD
+name: Deploy to CloudHub
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 8
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+    
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    
+    - name: Verify Maven Version Compatibility
+      run: |
+        echo "=== Maven Version Compatibility Check ==="
+        echo "Mule Runtime Version: 4.6.4"
+        echo "Mule Maven Plugin Version: 4.1.1"
+        echo "HTTP Connector Version: 1.8.8"
+        echo "Java Version: 8"
+        mvn --version
+    
+    - name: Compile project
+      run: mvn clean compile
+    
+    - name: Run tests
+      run: mvn test
+    
+    - name: Package application
+      run: mvn clean package
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: mule-application
+        path: target/*.jar
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-
-      - name: Build Application
-        run: mvn clean compile
-
-      - name: Package Application
-        run: mvn package
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: mule-application
-          path: target/*.jar
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 8
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: mule-application
+        path: target/
+    
+    - name: Deploy to CloudHub
+      run: |
+        mvn clean deploy -DmuleDeploy \
+          -Danypoint.username=${{ secrets.CLIENT_ID }} \
+          -Danypoint.password=${{ secrets.CLIENT_SECRET }} \
+          -Dmule.version=4.6.4 \
+          -Danypoint.environment=Sandbox
+      env:
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
