@@ -29,17 +29,14 @@ jobs:
     - name: Verify Maven Version Compatibility
       run: |
         echo "=== Maven Version Compatibility Check ==="
-        echo "Mule Runtime Version: 4.6.4"
-        echo "Mule Maven Plugin Version: 4.1.1"
-        echo "HTTP Connector Version: 1.8.8"
+        echo "Mule Runtime Version: 4.6.0"
+        echo "Mule Maven Plugin Version: 3.9.0"
+        echo "HTTP Connector Version: 1.9.0"
         echo "Java Version: 8"
         mvn --version
     
     - name: Compile project
       run: mvn clean compile
-    
-    - name: Run tests
-      run: mvn test
     
     - name: Package application
       run: mvn clean package
@@ -75,7 +72,7 @@ jobs:
         mvn clean deploy -DmuleDeploy \
           -Danypoint.username=${{ secrets.CLIENT_ID }} \
           -Danypoint.password=${{ secrets.CLIENT_SECRET }} \
-          -Dmule.version=4.6.4 \
+          -Dmule.version=4.6.0 \
           -Danypoint.environment=Sandbox
       env:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
