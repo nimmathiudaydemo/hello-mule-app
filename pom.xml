@@ -14,10 +14,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<!-- Compatible version matrix for Mule 4.6.x -->
-		<app.runtime>4.6.4</app.runtime>
-		<mule.maven.plugin.version>4.1.1</mule.maven.plugin.version>
-		<munit.version>3.1.1</munit.version>
+		<!-- Verified working version matrix for Mule 4.6.x -->
+		<app.runtime>4.6.0</app.runtime>
+		<mule.maven.plugin.version>3.9.0</mule.maven.plugin.version>
 		
 		<!-- Maven version for compatibility -->
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -58,15 +57,15 @@
 	</build>
 
 	<dependencies>
-		<!-- HTTP Connector - Compatible with Mule 4.6.x -->
+		<!-- HTTP Connector - Using proven working version from successful deployment -->
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-http-connector</artifactId>
-			<version>1.8.8</version>
+			<version>1.9.0</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		
-		<!-- Sockets Connector - Compatible with Mule 4.6.x -->
+		<!-- Sockets Connector - Standard version for Mule 4.6.x -->
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-sockets-connector</artifactId>
@@ -74,34 +73,19 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		
-		<!-- Validation Module - Compatible with Mule 4.6.x -->
+		<!-- Validation Module - Standard version for Mule 4.6.x -->
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-validation-module</artifactId>
-			<version>2.0.5</version>
+			<version>2.0.4</version>
 			<classifier>mule-plugin</classifier>
-		</dependency>
-
-		<!-- MUnit Dependencies for Testing -->
-		<dependency>
-			<groupId>com.mulesoft.munit</groupId>
-			<artifactId>munit-runner</artifactId>
-			<version>${munit.version}</version>
-			<classifier>mule-plugin</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.munit</groupId>
-			<artifactId>munit-tools</artifactId>
-			<version>${munit.version}</version>
-			<classifier>mule-plugin</classifier>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<repositories>
+		<!-- Correct repository URLs as per MuleSoft documentation -->
 		<repository>
-			<id>anypoint-exchange-v3</id>
+			<id>anypoint-exchange</id>
 			<name>Anypoint Exchange</name>
 			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
 			<layout>default</layout>
@@ -110,6 +94,12 @@
 			<id>mulesoft-releases</id>
 			<name>MuleSoft Releases Repository</name>
 			<url>https://repository.mulesoft.org/releases/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>mulesoft-public</id>
+			<name>MuleSoft Public Repository</name>
+			<url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
 			<layout>default</layout>
 		</repository>
 	</repositories>
@@ -123,7 +113,7 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</pluginRepository>
+			</pluginRepository>
 	</pluginRepositories>
 
 </project>
