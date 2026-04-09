@@ -1,0 +1,30 @@
+# Mule Application specific
+target/
+.mule/
+.metadata/
+.settings/
+.project
+.classpath
+*.log
+
+# Maven
+dependency-reduced-pom.xml
+
+# IDE specific
+.vscode/
+.idea/
+*.iml
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Build output
+classes/
+generated-sources/
+generated-test-sources/
