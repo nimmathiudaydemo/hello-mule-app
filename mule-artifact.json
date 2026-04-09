@@ -1,0 +1,15 @@
+{
+  "minMuleVersion": "4.6.0",
+  "requiredProduct": "MULE_EE",
+  "name": "hello-world-api",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedResources": []
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}
