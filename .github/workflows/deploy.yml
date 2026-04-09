@@ -18,8 +18,8 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Build & Deploy
+      - name: Build & Deploy to CloudHub
         run: mvn clean deploy -DmuleDeploy
         env:
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          ANYPOINT_USERNAME: ${{ secrets.CLIENT_ID }}
+          ANYPOINT_PASSWORD: ${{ secrets.CLIENT_SECRET }}
