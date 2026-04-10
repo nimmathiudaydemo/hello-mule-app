@@ -30,8 +30,8 @@ jobs:
       run: |
         echo "=== Maven Version Compatibility Check ==="
         echo "Mule Runtime Version: 4.6.0"
-        echo "Mule Maven Plugin Version: 3.9.0"
-        echo "HTTP Connector Version: 1.9.0"
+        echo "Mule Maven Plugin Version: 3.8.7"
+        echo "HTTP Connector Version: 1.7.3"
         echo "Java Version: 8"
         mvn --version
     
